@@ -9,6 +9,15 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}\\index.js"
+        },
+        {
+            "name": "React",
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost:3000",
+            //"file": "${workspaceFolder}/index.html",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
