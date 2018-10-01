@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import history from './history'
+import history from './historyReducer'
+import stepNumberReducer from './stepNumberReducer'
 
 export default combineReducers({
-    history
+    history,
+    stepNumberReducer
 })
