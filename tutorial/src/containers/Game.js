@@ -2,7 +2,6 @@ import React from 'react'
 import { calculateWinner } from '../helpers/resultHelper.js'
 import Board from '../components/Board'
 import { connect } from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 const Game = ({ squares, status, moves, handleClick }) => (
     <div className="game">
@@ -89,7 +88,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   const history = state.history;
-  const current = history[0]; //this.state.stepNumber
+  const current = history[state.stepNumber]; 
   const winner = calculateWinner(current.squares);
 
   const moves = history.map((step, move) => {
@@ -107,7 +106,7 @@ const mapStateToProps = (state, ownProps) => {
   if (winner) {
     status = 'Winner: ' + winner;
   } else {
-    status = 'Next player: ' + (true ? 'X' : 'O'); //this.state.xIsNext 
+    status = 'Next player: ' + (state.xIsNext ? 'X' : 'O');
   }
   
   return {
@@ -123,6 +122,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     // dispatch({ type : 1}) step number
     // is next
     // history
+    //todo
 
   }
   // return bindActionCreators({ handleClick : handleClick}, dispatch);

@@ -1,4 +1,4 @@
-const xIsNext = (state = 0, action) => {
+const xIsNext = (state = true, action) => {
     state.xIsNext = action.xIsNext
     return state
 }
