@@ -1,6 +1,10 @@
 const xIsNext = (state = true, action) => {
-    state.xIsNext = action.xIsNext
-    return state
+    switch (action.type) {
+        case 'CHANGE_NEXT_SYMBOL': 
+            return !state;
+        default:
+            return state
+    }
 }
 
 export default xIsNext

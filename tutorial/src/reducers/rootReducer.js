@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import history from './historyReducer'
-import stepNumberReducer from './stepNumberReducer'
-import xIsNextReducer from './xIsNextReducer'
+import stepNumber from './stepNumberReducer'
+import xIsNext from './xIsNextReducer'
 
 export default combineReducers({
     history,
-    stepNumberReducer,
-    xIsNextReducer
+    stepNumber,
+    xIsNext
 })

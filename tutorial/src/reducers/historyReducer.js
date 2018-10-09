@@ -1,13 +1,23 @@
 import { calculateWinner } from '../helpers/resultHelper.js'
 
 const history = (state = [{ squares: Array(9).fill(null) }], action) => {
-    const current = state[state.length - 1];
-    const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[action.clickedSquare]) {
-      return;
-    }
-    squares[action.clickedSquare] = action.xIsNext ? 'X' : 'O';
-    return state;
+  switch (action.type) {
+    case 'MAKE_MOVE':
+      let sq = state[state.length - 1].squares.slice()
+      if (calculateWinner(sq) || sq[action.clickedSquare]) {
+        return state
+      }
+      sq[action.clickedSquare] = action.nextSymbol
+      console.log('sqInReducer: ' + JSON.stringify(sq) + ' action.clickedSquare = ' + action.clickedSquare)      
+      return [
+        ...state,
+          {
+            squares: sq
+          }
+      ]
+    default:
+      return state
+  }
 }
 
 export default history

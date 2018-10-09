@@ -18,4 +18,8 @@ function calculateWinner(squares) {
     return null;
   }
 
-  export { calculateWinner };
+  const getState = (dispatch) => new Promise((resolve) => {
+    dispatch((dispatch, getState) => {resolve(getState())})
+  })
+
+  export { calculateWinner, getState };
