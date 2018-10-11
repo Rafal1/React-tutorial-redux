@@ -18,6 +18,17 @@
             "url": "http://localhost:3000",
             //"file": "${workspaceFolder}/index.html",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch via NPM",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script", "debug"
+            ],
+            "port": 9229
         }
     ]
 }

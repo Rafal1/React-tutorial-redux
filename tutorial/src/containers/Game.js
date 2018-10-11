@@ -38,10 +38,9 @@ const Game = ({ squares, status, nextSymbol, history, handleClick, jumpTo }) => 
   }
 
 const mapStateToProps = (state, ownProps) => {
-  const history = state.history;
-  const current = history[history.length - 1]; //state.stepNumber
-  const winner = calculateWinner(current.squares);
-
+  const history = state.history
+  const current = history[state.stepNumber]
+  const winner = calculateWinner(current.squares)
 
   let status;
   if (winner) {
@@ -60,12 +59,18 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleClick: async (i, nextSymbol) => {
+    handleClick : async (i, nextSymbol) => {
       const state = await getState(dispatch)
-      console.log('stateHandle: ' + JSON.stringify(state))
-      dispatch(makeMove(i, nextSymbol)) //nextSymbol można pobierać ze stanu, a można od góry po komoponentach pociagnąć tak jak tutaj
+      const current = state.history[state.stepNumber];
+      const squares = current.squares.slice();
+      if (calculateWinner(squares) || squares[i]) {
+        return
+      }
+      dispatch(makeMove(i, nextSymbol, state.stepNumber)) //nextSymbol można pobierać ze stanu, a można od góry po komoponentach pociagnąć tak jak tutaj
       dispatch(changeNextSymbol())
-      dispatch(changeStepNumber(state.history.length))
+      console.log('stepNumber: ' + state.stepNumber, 'historyLength:' + state.history.length)
+      let step = state.stepNumber + 1
+      dispatch(changeStepNumber(step))
     },
     jumpTo : async (step) => {
       dispatch(changeStepNumber(step))

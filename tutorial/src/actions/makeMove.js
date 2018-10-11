@@ -1,5 +1,6 @@
-export const makeMove = (i, nextSymbol) => ({
+export const makeMove = (i, nextSymbol, stepNumber) => ({
     type: 'MAKE_MOVE',
     clickedSquare: i,
-    nextSymbol : nextSymbol
+    nextSymbol : nextSymbol,
+    stepNumber : stepNumber
 })
