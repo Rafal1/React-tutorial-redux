@@ -8,34 +8,7 @@ import { changeNextSymbol } from '../actions/changeNextSymbol.js';
 import { changeStepNumber } from '../actions/changeStepNumber.js';
 
 
-const Game = ({ squares, status, moves, nextSymbol, handleClick }) => (
-    <div className="game">
-    <div className="game-board">
-      <Board
-        squares={squares}
-        onClick={handleClick}
-        nextSymbol={nextSymbol}
-      />
-    </div>
-    <div className="game-info">
-      <div>{status}</div>
-      <ol>{moves}</ol>
-    </div>
-  </div>
-)
-
-const mapStateToProps = (state, ownProps) => {
-  function jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0,
-    });
-  }
-
-  const history = state.history;
-  const current = history[history.length - 1]; //state.stepNumber
-  const winner = calculateWinner(current.squares);
-
+const Game = ({ squares, status, nextSymbol, history, handleClick, jumpTo }) => {
   const moves = history.map((step, move) => {
     const desc = move ?
       'Go to move #' + move :
@@ -45,7 +18,30 @@ const mapStateToProps = (state, ownProps) => {
         <button onClick={() => jumpTo(move)}>{desc}</button>
       </li>
     );
-  });
+  }); 
+  
+  return (
+      <div className="game">
+      <div className="game-board">
+        <Board
+          squares={squares}
+          onClick={handleClick}
+          nextSymbol={nextSymbol}
+        />
+      </div>
+      <div className="game-info">
+        <div>{status}</div>
+        <ol>{moves}</ol>
+      </div>
+      </div>
+    )
+  }
+
+const mapStateToProps = (state, ownProps) => {
+  const history = state.history;
+  const current = history[history.length - 1]; //state.stepNumber
+  const winner = calculateWinner(current.squares);
+
 
   let status;
   if (winner) {
@@ -55,9 +51,8 @@ const mapStateToProps = (state, ownProps) => {
   }
   let nextSymbol = state.xIsNext ? "X" : "O"
   return {
-    historyLength : history.length,
+    history : history,
     status : status,
-    moves : moves,
     squares : current.squares,
     nextSymbol : nextSymbol
   }
@@ -65,13 +60,16 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    async handleClick(i, nextSymbol) {
+    handleClick: async (i, nextSymbol) => {
       const state = await getState(dispatch)
-      // console.log('owp: ' + JSON.stringify(ownProps)) //empty
       console.log('stateHandle: ' + JSON.stringify(state))
-      dispatch(makeMove(i, nextSymbol))
+      dispatch(makeMove(i, nextSymbol)) //nextSymbol można pobierać ze stanu, a można od góry po komoponentach pociagnąć tak jak tutaj
       dispatch(changeNextSymbol())
-      // dispatch(changeStepNumber())
+      dispatch(changeStepNumber(state.history.length))
+    },
+    jumpTo : async (step) => {
+      dispatch(changeStepNumber(step))
+      dispatch(changeNextSymbol((step % 2) === 0))
     }
   }
 }

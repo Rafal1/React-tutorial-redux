@@ -8,7 +8,6 @@ const history = (state = [{ squares: Array(9).fill(null) }], action) => {
         return state
       }
       sq[action.clickedSquare] = action.nextSymbol
-      console.log('sqInReducer: ' + JSON.stringify(sq) + ' action.clickedSquare = ' + action.clickedSquare)      
       return [
         ...state,
           {
