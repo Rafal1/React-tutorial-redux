@@ -67,10 +67,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         return
       }
       dispatch(makeMove(i, nextSymbol, state.stepNumber)) //nextSymbol można pobierać ze stanu, a można od góry po komoponentach pociagnąć tak jak tutaj
-      dispatch(changeNextSymbol())
       console.log('stepNumber: ' + state.stepNumber, 'historyLength:' + state.history.length)
       let step = state.stepNumber + 1
       dispatch(changeStepNumber(step))
+      dispatch(changeNextSymbol((step % 2) === 0))
     },
     jumpTo : async (step) => {
       dispatch(changeStepNumber(step))

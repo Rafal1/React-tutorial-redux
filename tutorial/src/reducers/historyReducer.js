@@ -1,4 +1,3 @@
-import { calculateWinner } from '../helpers/resultHelper.js'
 
 const history = (state = [{ squares: Array(9).fill(null) }], action) => {
   switch (action.type) {

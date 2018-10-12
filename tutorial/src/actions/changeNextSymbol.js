@@ -1,3 +1,4 @@
-export const changeNextSymbol = () => ({
-    type: 'CHANGE_NEXT_SYMBOL'
+export const changeNextSymbol = value => ({
+    type : 'CHANGE_NEXT_SYMBOL',
+    value : value
 })
