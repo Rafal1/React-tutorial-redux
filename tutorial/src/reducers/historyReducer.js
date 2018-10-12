@@ -6,15 +6,15 @@ const history = (state = [{ squares: Array(9).fill(null) }], action) => {
         return index <= action.stepNumber
       }
       const historyMod = state.filter(filterFunc)
+      //immutable pardigm -> slice i concat na stanie, ani zmienne na podstawie stanu nie zadziałają jak chcesz zwrócić stan
+      // state.concat({
+      //   squares: sq
+      // })
       // let historyMod = state.slice(0, action.stepNumber + 2);  //.step number before increase
       let sq = historyMod[historyMod.length - 1].squares.slice()
       console.log('historyMod:' + JSON.stringify(historyMod))
       sq[action.clickedSquare] = action.nextSymbol
-      // state.concat({
-      //   squares: sq
-      // })
-      // console.log(JSON.stringify(history))
-      // return history
+
       return [
         ...historyMod,
         {

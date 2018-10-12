@@ -18,10 +18,10 @@ const Game = ({ squares, status, nextSymbol, history, handleClick, jumpTo }) => 
         <button onClick={() => jumpTo(move)}>{desc}</button>
       </li>
     );
-  }); 
-  
+  });
+
   return (
-      <div className="game">
+    <div className="game">
       <div className="game-board">
         <Board
           squares={squares}
@@ -33,9 +33,9 @@ const Game = ({ squares, status, nextSymbol, history, handleClick, jumpTo }) => 
         <div>{status}</div>
         <ol>{moves}</ol>
       </div>
-      </div>
-    )
-  }
+    </div>
+  )
+}
 
 const mapStateToProps = (state, ownProps) => {
   const history = state.history
@@ -50,16 +50,16 @@ const mapStateToProps = (state, ownProps) => {
   }
   let nextSymbol = state.xIsNext ? "X" : "O"
   return {
-    history : history,
-    status : status,
-    squares : current.squares,
-    nextSymbol : nextSymbol
+    history: history,
+    status: status,
+    squares: current.squares,
+    nextSymbol: nextSymbol
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleClick : async (i, nextSymbol) => {
+    handleClick: async (i, nextSymbol) => {
       const state = await getState(dispatch)
       const current = state.history[state.stepNumber];
       const squares = current.squares.slice();
@@ -67,12 +67,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         return
       }
       dispatch(makeMove(i, nextSymbol, state.stepNumber)) //nextSymbol można pobierać ze stanu, a można od góry po komoponentach pociagnąć tak jak tutaj
-      console.log('stepNumber: ' + state.stepNumber, 'historyLength:' + state.history.length)
       let step = state.stepNumber + 1
       dispatch(changeStepNumber(step))
       dispatch(changeNextSymbol((step % 2) === 0))
     },
-    jumpTo : async (step) => {
+    jumpTo: async (step) => {
       dispatch(changeStepNumber(step))
       dispatch(changeNextSymbol((step % 2) === 0))
     }
